@@ -2,8 +2,9 @@ routes:
   - id: hello-route
     uri: "/hello"
     service_id: "hello-svc"
-    plugins:
-      key-auth: {}
+  - id: health-route
+    uri: "/health"
+    service_id: "hello-svc"
   - id: hello-gemini-route
     uri: "/hello-gemini"
     service_id: "hello-gemini-svc"
@@ -13,7 +14,7 @@ routes:
         uri: "/v1beta/models/gemini-2.0-flash:generateContent"
         headers:
           Content-Type: "application/json"
-          X-goog-api-key: "AIzaSyDvwtlFZAjvcvjxHgo-w6gGF2w4Fu_PajI"
+          X-goog-api-key: "REPLACE_WITH_YOUR_API_KEY"
 
 services:
   - id: hello-svc
@@ -27,9 +28,4 @@ services:
       scheme: https
       nodes:
         "generativelanguage.googleapis.com:443": 1
-# Added consumer for key-auth protected route
-consumers:
-  - username: demo-user
-    key_auth:
-      key: demo-key-123
 #END

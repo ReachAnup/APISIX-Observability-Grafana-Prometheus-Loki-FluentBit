@@ -27,5 +27,9 @@ async def read_root():
         }
     }
 
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "mock-ai-service", "timestamp": "2025-08-29T15:50:00Z"}
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=5001)

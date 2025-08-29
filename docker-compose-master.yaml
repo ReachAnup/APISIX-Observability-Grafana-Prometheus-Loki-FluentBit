@@ -4,6 +4,8 @@ services:
   apisix:
     image: "apache/apisix:${APISIX_DOCKER_TAG:-latest}"
     restart: always
+    env_file:
+      - .env
     environment:
       APISIX_STAND_ALONE: "true"
     volumes:
@@ -24,7 +26,7 @@ services:
     user: root
     restart: always
     volumes:
-      - ../example/etcd_data:/etcd_data
+      - ./example/etcd_data:/etcd_data
     environment:
       ETCD_DATA_DIR: /etcd_data
       ETCD_ENABLE_V2: "true"
@@ -48,7 +50,7 @@ services:
     depends_on:
       - apisix
     volumes:
-      - ../example/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
+      - ./example/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
     environment:
       DASHBOARD_API_BASE: http://apisix:9180/apisix
       DASHBOARD_USER: admin

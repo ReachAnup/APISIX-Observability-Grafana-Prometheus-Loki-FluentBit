@@ -10,6 +10,53 @@ This repository provides a complete observability stack for Apache APISIX API Ga
 - 🚀 **APISIX** - High-performance API Gateway
 - 🤖 **Mock AI Service** - Sample upstream service for testing
 
+## ⚠️ **IMPORTANT: First Time Setup**
+
+**Before starting services, you must configure API keys:**
+
+### **🔐 Step 1: Create Secrets File**
+```bash
+# Create secrets.yaml (this file is git-ignored for security)
+notepad secrets.yaml
+```
+
+Add your Google API key:
+```yaml
+google:
+  api_key: "YOUR_ACTUAL_GOOGLE_API_KEY_HERE"
+```
+
+### **🚀 Step 2: Update Configuration**
+Run the update script to inject your API key:
+
+**Windows (PowerShell - Recommended):**
+```powershell
+.\update-api-key.ps1
+```
+
+**Windows (Batch):**
+```cmd
+update-api-key.bat
+```
+
+**Manual Method:**
+1. Open `apisix_conf\master\apisix.yaml`
+2. Find: `X-goog-api-key: "REPLACE_WITH_YOUR_API_KEY"`
+3. Replace with your actual API key from `secrets.yaml`
+
+### **🐳 Step 3: Start Services**
+```bash
+docker-compose -f docker-compose-master.yaml up -d
+```
+
+### **🔒 Security Features**
+- ✅ API keys stored in `secrets.yaml` (git-ignored)
+- ✅ Automated scripts for secure key injection
+- ✅ No secrets committed to repository
+- ✅ Template files for team collaboration
+
+📖 **For detailed security information, see [API_KEY_MANAGEMENT.md](API_KEY_MANAGEMENT.md)**
+
 ## 🏗️ Architecture
 
 ```
