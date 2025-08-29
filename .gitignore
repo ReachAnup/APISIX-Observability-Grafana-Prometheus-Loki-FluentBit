@@ -1,0 +1,18 @@
+# Logs directory
+logs/
+loki-data/
+
+# Docker volumes
+etcd_data/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.tmp

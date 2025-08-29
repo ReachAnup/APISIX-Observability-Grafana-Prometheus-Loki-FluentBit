@@ -1,0 +1,35 @@
+routes:
+  - id: hello-route
+    uri: "/hello"
+    service_id: "hello-svc"
+    plugins:
+      key-auth: {}
+  - id: hello-gemini-route
+    uri: "/hello-gemini"
+    service_id: "hello-gemini-svc"
+    plugins:
+      proxy-rewrite:
+        scheme: "https"
+        uri: "/v1beta/models/gemini-2.0-flash:generateContent"
+        headers:
+          Content-Type: "application/json"
+          X-goog-api-key: "AIzaSyDvwtlFZAjvcvjxHgo-w6gGF2w4Fu_PajI"
+
+services:
+  - id: hello-svc
+    upstream:
+      type: roundrobin
+      nodes:
+        "mock-ai-service:5001": 1
+  - id: hello-gemini-svc
+    upstream:
+      type: roundrobin
+      scheme: https
+      nodes:
+        "generativelanguage.googleapis.com:443": 1
+# Added consumer for key-auth protected route
+consumers:
+  - username: demo-user
+    key_auth:
+      key: demo-key-123
+#END

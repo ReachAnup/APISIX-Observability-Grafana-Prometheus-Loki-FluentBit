@@ -1,0 +1,23 @@
+{
+    "id": "hello-gemini",
+    "uri": "/hello-gemini",
+    "plugins": {
+        "proxy-rewrite": {
+            "scheme": "https",
+            "uri": "/v1beta/models/gemini-2.0-flash:generateContent",
+            "headers": {
+                "Content-Type": "application/json",
+                "X-goog-api-key": "AIzaSyDvwtlFZAjvcvjxHgo-w6gGF2w4Fu_PajI"
+            }
+        }
+    },
+    "upstream": {
+        "pass_host": "rewrite",
+        "upstream_host": "generativelanguage.googleapis.com",
+        "scheme": "https",
+        "nodes": {
+            "generativelanguage.googleapis.com:443": 1
+        },
+        "type": "roundrobin"
+    }
+}

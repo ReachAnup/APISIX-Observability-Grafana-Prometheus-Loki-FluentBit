@@ -1,0 +1,160 @@
+{
+    "id": null,
+    "uid": "apisix-logs-metrics",
+    "title": "APISIX Logs & Metrics",
+    "timezone": "browser",
+    "schemaVersion": 26,
+    "version": 1,
+    "refresh": "10s",
+    "tags": [
+        "apisix",
+        "logs",
+        "metrics"
+    ],
+    "panels": [
+        {
+            "type": "row",
+            "title": "Traffic Overview",
+            "id": 100,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "type": "stat",
+            "title": "Total Requests (gauge)",
+            "id": 101,
+            "datasource": "Prometheus",
+            "gridPos": {
+                "h": 4,
+                "w": 6,
+                "x": 0,
+                "y": 1
+            },
+            "targets": [
+                {
+                    "expr": "sum(apisix_http_requests_total)",
+                    "refId": "A"
+                }
+            ],
+            "options": {
+                "reduceOptions": {
+                    "calcs": [
+                        "last"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "orientation": "horizontal"
+            }
+        },
+        {
+            "type": "timeseries",
+            "title": "Requests Rate (req/s)",
+            "id": 102,
+            "datasource": "Prometheus",
+            "gridPos": {
+                "h": 8,
+                "w": 9,
+                "x": 6,
+                "y": 1
+            },
+            "targets": [
+                {
+                    "expr": "sum(rate(apisix_http_requests_total[1m]))",
+                    "refId": "A"
+                }
+            ]
+        },
+        {
+            "type": "logs",
+            "title": "Recent Access Logs",
+            "id": 103,
+            "datasource": "Loki",
+            "gridPos": {
+                "h": 12,
+                "w": 9,
+                "x": 15,
+                "y": 1
+            },
+            "targets": [
+                {
+                    "expr": "{job=\"apisix\"}",
+                    "refId": "A"
+                }
+            ],
+            "options": {
+                "showLabels": true,
+                "showTime": true,
+                "wrapLogMessage": true
+            }
+        },
+        {
+            "type": "row",
+            "title": "Logs Breakdown",
+            "id": 110,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 13
+            }
+        },
+        {
+            "type": "logs",
+            "title": "Error Logs (filtered)",
+            "id": 111,
+            "datasource": "Loki",
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 14
+            },
+            "targets": [
+                {
+                    "expr": "{job=\"apisix\"} |= \"[error]\"",
+                    "refId": "A"
+                }
+            ],
+            "options": {
+                "showLabels": false,
+                "showTime": true,
+                "wrapLogMessage": true
+            }
+        },
+        {
+            "type": "logs",
+            "title": "Warnings",
+            "id": 112,
+            "datasource": "Loki",
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 14
+            },
+            "targets": [
+                {
+                    "expr": "{job=\"apisix\"} |= \"[warn]\"",
+                    "refId": "A"
+                }
+            ],
+            "options": {
+                "showLabels": false,
+                "showTime": true,
+                "wrapLogMessage": true
+            }
+        }
+    ],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-15m",
+        "to": "now"
+    }
+}
